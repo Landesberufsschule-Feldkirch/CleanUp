@@ -39,6 +39,7 @@ namespace CleanUp.Model
 
             foreach (var folderName in folderNames)
             {
+                if (folderName.Contains(".git")) continue;
 
                 if (ordnerTypen == "bin + obj")
                 {
