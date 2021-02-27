@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,31 +8,29 @@ namespace CleanUp.Model
 {
     public class CleanUp
     {
-        public Einstellungen Einstellungen { get; set; }
-        private bool _enableButton;
+        public ObservableCollection<string> Einstellungen { get; set; }
         private readonly StringBuilder _textBoxText;
         private readonly List<string> _ordnerListe;
+        private readonly ViewModel.VisuAnzeigen _visuAnzeigen;
 
-        public CleanUp()
+        public CleanUp(ViewModel.VisuAnzeigen viAnzeige)
         {
+            _visuAnzeigen = viAnzeige;
             _ordnerListe = new List<string>();
             _textBoxText = new StringBuilder();
-            Einstellungen = new Einstellungen();
-            Einstellungen.AlleOrdnerBezeichnungen.Insert(0, new OrdnerNamen("Bitte Auswählen"));
-            Einstellungen.AlleOrdnerBezeichnungen.Insert(0, new OrdnerNamen("/bin"));
-            Einstellungen.AlleOrdnerBezeichnungen.Insert(0, new OrdnerNamen("/obj"));
+            Einstellungen = new ObservableCollection<string>();
+            Einstellungen.Insert(0, "Bitte Auswählen");
+            Einstellungen.Insert(1, "/bin");
+            Einstellungen.Insert(2, "/obj");
         }
         private void OrdnerStrukturAnpassen()
         {
             _textBoxText.Clear();
-            foreach (var ergebnis in _ordnerListe.Select(DateienUndOrdner.OrdnerLoeschen))
-            {
-                _textBoxText.Append($"{ergebnis}\n");
-            }
+            foreach (var ergebnis in _ordnerListe.Select(DateienUndOrdner.OrdnerLoeschen)) _textBoxText.Append($"{ergebnis}");
         }
         internal void PfadAktualisieren(string selectedPath, string ordnerTypen)
         {
-            _enableButton = true;
+            _visuAnzeigen.EnableButton = true;
             var folderNames = Directory.GetDirectories(selectedPath, "*.*", SearchOption.AllDirectories);
 
             _textBoxText.Clear();
@@ -43,11 +42,10 @@ namespace CleanUp.Model
 
                 if (ordnerTypen == "bin + obj")
                 {
-                    if (folderName.Contains("bin") || folderName.Contains("obj"))
-                    {
-                        _ordnerListe.Add(folderName);
-                        _textBoxText.Append($"{folderName}\n");
-                    }
+                    if (!folderName.Contains("bin") && !folderName.Contains("obj")) continue;
+
+                    _ordnerListe.Add(folderName);
+                    _textBoxText.Append($"{folderName}\n");
                 }
                 else
                 {
@@ -56,11 +54,10 @@ namespace CleanUp.Model
                     _ordnerListe.Add(folderName);
                     _textBoxText.Append($"{folderName}\n");
                 }
-
             }
+
+            _visuAnzeigen.TextBoxText = _textBoxText;
         }
-        internal object TextBoxText() => _textBoxText;
         internal void TasterStart() => System.Threading.Tasks.Task.Run(OrdnerStrukturAnpassen);
-        public bool ButtonEnabled() => _enableButton;
     }
 }

@@ -1,33 +1,15 @@
 ﻿using System.ComponentModel;
-using System.Threading;
 
 namespace CleanUp.ViewModel
 {
     public class VisuAnzeigen : INotifyPropertyChanged
     {
-        private readonly CleanUp.Model.CleanUp _cleanUp;
-
-        public VisuAnzeigen(CleanUp.Model.CleanUp cleanUp)
+        public VisuAnzeigen()
         {
-            _cleanUp=cleanUp;
-
             EnableButton = false;
             TextBoxText = "";
-
-            System.Threading.Tasks.Task.Run(VisuAnzeigenTask);
-
         }
-        private void VisuAnzeigenTask()
-        {
-            while (true)
-            {
-                TextBoxText = _cleanUp.TextBoxText();
-                EnableButton = _cleanUp.ButtonEnabled();
-                Thread.Sleep(10);
-            }
-            // ReSharper disable once FunctionNeverReturns
-        }
-        
+
         #region EnableButton
         private bool _enableButton;
         public bool EnableButton
@@ -36,7 +18,7 @@ namespace CleanUp.ViewModel
             set
             {
                 _enableButton = value;
-                OnPropertyChanged("EnableButton");
+                OnPropertyChanged(nameof(EnableButton));
             }
         }
         #endregion
@@ -49,11 +31,11 @@ namespace CleanUp.ViewModel
             set
             {
                 _textBoxText = value;
-                OnPropertyChanged("TextBoxText");
+                OnPropertyChanged(nameof(TextBoxText));
             }
         }
         #endregion
-        
+
         #region iNotifyPeropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;

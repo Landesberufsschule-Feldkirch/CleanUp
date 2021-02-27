@@ -6,12 +6,12 @@ namespace CleanUp.ViewModel
     public class ViewModel
     {
         // ReSharper disable once UnusedMember.Global
-        public Model.CleanUp CleanUp { get; }
+        public Model.CleanUp CleanUp { get; set; }
         public VisuAnzeigen ViAnzeige { get; set; }
         public ViewModel()
         {
-            CleanUp = new Model.CleanUp();
-            ViAnzeige = new VisuAnzeigen(CleanUp);
+            ViAnzeige = new VisuAnzeigen();
+            CleanUp = new Model.CleanUp(ViAnzeige);
         }
 
         private ICommand _btnStart;
