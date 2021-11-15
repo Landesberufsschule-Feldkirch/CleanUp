@@ -22,7 +22,7 @@ namespace CleanUp
             if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
 
             var ordnerTypen = CbOrdnerTypen.SelectionBoxItem.ToString();
-            _viewModel.CleanUp.PfadAktualisieren(dialog.SelectedPath, ordnerTypen);
+            _viewModel.CleanUp.AlleOrdnerEinlesen(dialog.SelectedPath, ordnerTypen);
         }
     }
 }

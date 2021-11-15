@@ -23,12 +23,17 @@ namespace CleanUp.Model
             Einstellungen.Insert(1, "/bin");
             Einstellungen.Insert(2, "/obj");
         }
-        private void OrdnerStrukturAnpassen()
+        private void OrdnerLoeschen()
         {
             _textBoxText.Clear();
+            _textBoxText.Append("Alle ausgewählten Order löschen!\n\n");
             foreach (var ergebnis in _ordnerListe.Select(DateienUndOrdner.OrdnerLoeschen)) _textBoxText.Append($"{ergebnis}");
+
+            _textBoxText.Append("\n\nHabe fertig!\n\n");
+
+            _visuAnzeigen.TextBoxText = _textBoxText;
         }
-        internal void PfadAktualisieren(string selectedPath, string ordnerTypen)
+        internal void AlleOrdnerEinlesen(string selectedPath, string ordnerTypen)
         {
             _visuAnzeigen.EnableButton = true;
             var folderNames = Directory.GetDirectories(selectedPath, "*.*", SearchOption.AllDirectories);
@@ -58,6 +63,6 @@ namespace CleanUp.Model
 
             _visuAnzeigen.TextBoxText = _textBoxText;
         }
-        internal void TasterStart() => System.Threading.Tasks.Task.Run(OrdnerStrukturAnpassen);
+        internal void TasterStart() => System.Threading.Tasks.Task.Run(OrdnerLoeschen);
     }
 }
