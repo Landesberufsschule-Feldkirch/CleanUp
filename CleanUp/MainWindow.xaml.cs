@@ -15,6 +15,8 @@ namespace CleanUp
             CbOrdnerTypen.Items.Add("bin + obj");
             CbOrdnerTypen.Items.Add("bin");
             CbOrdnerTypen.Items.Add("obj");
+            CbOrdnerTypen.Items.Add("net5");
+            CbOrdnerTypen.Items.Add("net6");
         }
         internal void BtnOpenFile_Click(object sender, RoutedEventArgs e)
         {
@@ -22,7 +24,7 @@ namespace CleanUp
             if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
 
             var ordnerTypen = CbOrdnerTypen.SelectionBoxItem.ToString();
-            _viewModel.CleanUp.AlleOrdnerEinlesen(dialog.SelectedPath, ordnerTypen);
+            _viewModel.CleanUp.PfadAktualisieren(dialog.SelectedPath, ordnerTypen);
         }
     }
 }
