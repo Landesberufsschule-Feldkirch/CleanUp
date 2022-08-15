@@ -1,6 +1,5 @@
-﻿namespace CleanUp
+﻿namespace CleanUp;
+
+public partial class App
 {
-    public partial class App
-    {
-    }
 }
