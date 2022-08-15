@@ -32,6 +32,6 @@
         <Button Grid.Column="3" Grid.Row="1"  Content="Ordner wählen" FontSize="14pt" Command="{Binding OrdnerCommand}"/>
         <Button Grid.Column="5" Grid.Row="1" Content="Löschen!"  Background="LawnGreen" FontSize="14pt" IsEnabled="{Binding BoolEnableButton}" Command="{Binding StartCommand  }"  />
 
-        <TextBox  Grid.Column="1" Grid.ColumnSpan="6"  Grid.Row="3" TextWrapping="Wrap" FontSize="14pt" Text="{Binding StringTextBoxText}" />
+        <TextBox x:Name="TextBox" Grid.Column="1" Grid.ColumnSpan="6"  Grid.Row="3" TextWrapping="Wrap" FontSize="14pt" Text="{Binding StringTextBoxText}" />
     </Grid>
 </Window>

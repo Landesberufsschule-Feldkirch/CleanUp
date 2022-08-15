@@ -1,6 +1,5 @@
 ﻿using CleanUp.ViewModel;
 
-
 namespace CleanUp;
 
 public partial class MainWindow
@@ -12,7 +11,6 @@ public partial class MainWindow
     {
         ViewModel = new VmCleanUp(this);
         ModelCleanUp = new Model.CleanUp(ViewModel);
-
 
         InitializeComponent();
         DataContext = ViewModel;

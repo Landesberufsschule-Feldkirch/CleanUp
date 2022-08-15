@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using CleanUp.ViewModel;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
-using CleanUp.ViewModel;
+using System.Threading;
+using System.Windows;
 
 namespace CleanUp.Model;
 
@@ -32,8 +34,9 @@ public class CleanUp
         foreach (var ergebnis in _ordnerListe.Select(DateienUndOrdner.OrdnerLoeschen))
         {
             _textBoxText.Append($"{ergebnis}");
-            _vmCleanUp.StringTextBoxText = _textBoxText.ToString();
-            //  Application.Current.Dispatcher.Invoke(() => { _vmCleanUp.StringTextBoxText = _textBoxText.ToString(); });
+            // _vmCleanUp.StringTextBoxText = _textBoxText.ToString();
+            Application.Current.Dispatcher.Invoke(() => { _vmCleanUp.StringTextBoxText = _textBoxText.ToString(); });
+            Thread.Sleep(10);
         }
     }
     internal void PfadAktualisieren(string selectedPath, string ordnerTypen)
